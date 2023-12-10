@@ -39,6 +39,7 @@ window.addEventListener("load", function(){
             this.player1.hpbar(ctx);
             this.player1.draw(ctx);
             this.player2.draw(ctx);
+            //have to create a list of objects to draw and remove the extraones this includes sprintdust specialattacks (not ko since it affects the total canvas and its a pain in the ass to do all that)
             this.sprint.draw(ctx);
             this.ko.draw(ctx);
         }
