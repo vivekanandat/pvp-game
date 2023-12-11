@@ -146,7 +146,7 @@ export class SPRINTING extends State{
         this.player2.width=52;
         this.player2.maxFrame=0;
         this.player2.height = 58;
-        this.player1.sprint=true;
+        this.player2.sprint=true;
     }
     InputHandler(input){
         if(input.includes("1"))this.player2.setstate(states.PUNCH);

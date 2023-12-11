@@ -30,6 +30,11 @@ export class Player1{
         this.condition=false;
         this.sprx=0;
         this.spry=0;
+        
+        //sphere
+        this.spherex=0;
+        this.spherey=0;
+        this.u=false;
 
         this.frameintervel=1000/this.fps;
         this.frameTimer=0;
@@ -96,6 +101,9 @@ export class Player1{
             }
             if(input.includes("a")){
                 this.x -= this.speed;
+            }
+            if(input.includes("u")){
+                this.u=true;
             }
             else if(input.includes("d")){
                 this.x += this.speed;

@@ -2,7 +2,7 @@ import { Player1 } from "./player1.js";
 import { InputHandler } from "./input.js";
 import { Player2 } from "./player2.js";
 import { Fight } from "./fight.js";
-import {sprint,KO,aurasphere} from "./sprint.js";
+import {sprint,KO,sphere} from "./sprint.js";
 
 window.addEventListener("load", function(){
     const canvas = document.getElementById("canvas");
@@ -19,8 +19,8 @@ window.addEventListener("load", function(){
             this.Fight = new Fight(this.player1,this.player2);
             this.input=new InputHandler();
             this.sprint=new sprint(this);
+            this.aurasphere=new sphere(this);
             this.ko=new KO(this);
-            this.util=[];
         }
         update(deltatime){
             this.player1.update(this.input.keys,deltatime);
@@ -33,6 +33,7 @@ window.addEventListener("load", function(){
                 this.ko.update(deltatime);
             }
             this.sprint.update(deltatime);
+            this.aurasphere.update(deltatime);
         }
         draw(ctx){
             this.player2.hpbar(ctx);
@@ -42,10 +43,7 @@ window.addEventListener("load", function(){
             //have to create a list of objects to draw and remove the extraones this includes sprintdust specialattacks (not ko since it affects the total canvas and its a pain in the ass to do all that)
             this.sprint.draw(ctx);
             this.ko.draw(ctx);
-        }
-        addmove(){
-            if(this.input.keys.includes('u'))
-                this.util.push();
+            this.aurasphere.draw(ctx);
         }
     }
     const game = new Game(canvas.width,canvas.height);

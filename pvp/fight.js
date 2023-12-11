@@ -32,5 +32,14 @@ export class Fight{
                 }
             }
         }
+        if(this.player2.x+this.player2.width>this.player1.spherex && this.player2.x<this.player1.spherex+35 && this.player2.y+this.player2.height>this.player1.spherey && this.player2.y<this.player1.spherey+35){
+            if(!this.player2.invulnarable){
+                    this.player2.health-=30;
+                    this.player2.vulnarable=true;
+                    this.player2.timegap=30;
+                    this.player2.hit+=1;
+                    this.sound.play();
+            }            
+        }
     }
 }
