@@ -141,7 +141,6 @@ export class SPRINTING extends State{
         super('SPRINTING');
         this.player1=player1;
         this.sound=new Audio();
-        this.sound.src="sprint.ogg";
 
     }
     enter(){
@@ -150,7 +149,6 @@ export class SPRINTING extends State{
         this.player1.maxFrame=0;
         this.player1.height = 58;
         this.player1.sprint=true;
-        this.sound.play();
     }
     InputHandler(input){
         if(this.player1.vulnarable)this.player1.setstate(states.VULNARABLE);

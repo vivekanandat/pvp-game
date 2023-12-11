@@ -25,7 +25,6 @@ export class STANDING extends State{
     constructor(player2){
         super('STANDING');
         this.player2=player2;
-
     }
     enter(){
         if(this.input.keys.includes("ArrowLeft")){
@@ -89,6 +88,8 @@ export class JUMPING extends State{
     constructor(player2){
         super('JUMPING');
         this.player2=player2;
+        this.sound=new Audio();
+        this.sound.src="jump.ogg";
 
     }
     enter(){
@@ -97,6 +98,7 @@ export class JUMPING extends State{
         this.player2.width=43;
         this.player2.maxFrame=0;
         this.player2.height = 58;
+        this.sound.play();
     }
     InputHandler(input){
         if(input.includes("1"))this.player2.setstate(states.PUNCH);
@@ -111,6 +113,8 @@ export class FALLING extends State{
     constructor(player2){
         super('FALLING');
         this.player2=player2;
+        this.sound=new Audio();
+        this.sound.src="jumpland.wav";
 
     }
     enter(){
@@ -125,6 +129,7 @@ export class FALLING extends State{
             this.player2.frameX=0;
             this.player2.setstate(states.STANDING);
             this.player2.airStep=true;
+            this.sound.play();
         }
         if(input.includes("2"))this.player2.setstate(states.EXTRAJUMPING);
         if(this.player2.vulnarable){ this.player2.setstate(states.VULNARABLE);}
@@ -141,6 +146,7 @@ export class SPRINTING extends State{
         this.player2.width=52;
         this.player2.maxFrame=0;
         this.player2.height = 58;
+        this.player1.sprint=true;
     }
     InputHandler(input){
         if(input.includes("1"))this.player2.setstate(states.PUNCH);
@@ -199,6 +205,8 @@ export class EXTRAJUMPING extends State{
     constructor(player2){
         super('EXTRAJUMPING');
         this.player2=player2;
+        this.sound=new Audio();
+        this.sound.src="jump.ogg";
 
     }
     enter(){
@@ -208,6 +216,7 @@ export class EXTRAJUMPING extends State{
         this.player2.maxFrame=0;
         this.player2.height = 58;
         this.player2.airStep=false;
+        this.sound.play();
     }
     InputHandler(input){
         if(input.includes("1"))this.player2.setstate(states.PUNCH);

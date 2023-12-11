@@ -1,7 +1,7 @@
 import {Player1} from "./player1.js";
 import { InputHandler } from "./input.js";
 
-export class sprint{
+class extra{
     constructor(game){
         this.game=game;
         this.framex=0;
@@ -9,9 +9,13 @@ export class sprint{
         this.fps=12;
         this.frameintervel=1000/this.fps;
         this.frameTimer=0;
+    }
+}
+
+export class sprint extends extra{
+    constructor(game){
         this.image=document.getElementById("sprintdustflip");
         this.image1=document.getElementById("sprintdust");
-        this.ko=document.getElementById("KO");
         this.Player1=new Player1(game);
         this.input=new InputHandler();
         this.x=50;
@@ -49,14 +53,8 @@ export class sprint{
         
     }
 }
-export class KO{
+export class KO extends extra{
     constructor(game){
-        this.game=game;
-        this.framex=0;
-        this.framey=0;
-        this.fps=10;
-        this.frameintervel=1000/this.fps;
-        this.frameTimer=0;
         this.ko=document.getElementById("KO");
         this.x=330;
         this.y=200;
