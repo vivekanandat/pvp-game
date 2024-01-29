@@ -1,4 +1,3 @@
-import {Player1} from "./player1.js";
 import { InputHandler } from "./input.js";
 
 

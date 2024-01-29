@@ -1,6 +1,5 @@
 import { Player1 } from "./player1.js";
 import { InputHandler } from "./input.js";
-import { Player2 } from "./player2.js";
 import { Fight } from "./fight.js";
 import {sprint,KO,sphere} from "./sprint.js";
 
