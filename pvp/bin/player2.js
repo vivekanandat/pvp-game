@@ -9,10 +9,12 @@ export class Player2{
         this.vulnarable=false;
         this.timegap=50;
         this.tracer=0;
-
+        this.u=false;
         
         this.hit=0;
         this.hitlast=0;
+        this.spherex=0;
+        this.spherey=0;
         this.health=0;
         this.flip=true;
         this.game = game;
@@ -96,6 +98,9 @@ export class Player2{
             }
             else if(input.includes("ArrowRight")){
                 this.x += this.speed;
+            }
+            if(input.includes("4")){
+                this.u=true;
             }
             if(this.x<0)this.x=0;
             if(this.x>canvas.width-this.width)

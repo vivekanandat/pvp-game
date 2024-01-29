@@ -3,16 +3,15 @@ import { InputHandler } from "./input.js";
 
 
 export class sprint{
-    constructor(game){
+    constructor(game,p){
         this.game=game;
         this.framex=0;
-        this.framey=0;
         this.fps=12;
         this.frameintervel=1000/this.fps;
         this.frameTimer=0;
         this.image=document.getElementById("sprintdustflip");
         this.image1=document.getElementById("sprintdust");
-        this.Player1=new Player1(game);
+        this.player1=p;
         this.input=new InputHandler();
         this.x=50;
         this.y=36;
@@ -30,20 +29,20 @@ export class sprint{
         }
         if(this.framex>4){
             this.framex=0;
-            this.Player1.sprint=false;
+            this.player1.sprint=false;
         }
-        if(this.input.keys.includes("l")){
-            this.Player1.sprint=true;
+        if(this.input.keys.includes(this.player1.sprinter)){
+            this.player1.sprint=true;
         }
 
     }
     draw(ctx){
-        if(this.Player1.sprint){
-            if(this.game.player1.flip){
-                ctx.drawImage(this.image,this.framex*this.x,0,this.x,this.y,this.game.player1.sprx+50,this.game.player1.spry+18,this.x,this.y);
+        if(this.player1.sprint){
+            if(this.player1.flip){
+                ctx.drawImage(this.image,this.framex*this.x,0,this.x,this.y,this.player1.sprx+50,this.player1.spry+18,this.x,this.y);
             }
-            if(!this.game.player1.flip){
-                ctx.drawImage(this.image1,this.framex*this.x,0,this.x,this.y,this.game.player1.sprx-50,this.game.player1.spry+18,this.x,this.y);
+            if(!this.player1.flip){
+                ctx.drawImage(this.image1,this.framex*this.x,0,this.x,this.y,this.player1.sprx-50,this.player1.spry+18,this.x,this.y);
             }
         }
         
@@ -52,9 +51,8 @@ export class sprint{
 export class KO{
     constructor(game){
         this.game=game;
-        this.framex=0;
-        this.framey=0;
         this.fps=12;
+        this.framex=0;
         this.frameintervel=1000/this.fps;
         this.frameTimer=0;
         this.ko=document.getElementById("KO");
@@ -90,17 +88,20 @@ export class KO{
     }
 }
 export class sphere{
-    constructor(game){
+    constructor(game,p){
         this.game=game;
         this.framex=0;
-        this.framey=0;
+        this.framesx=0;
         this.fps=5;
+        this.speed=5;
         this.frameintervel=1000/this.fps;
         this.frameTimer=0;
+        this.sphereflip=document.getElementById("sphereflip");
         this.sphere=document.getElementById("sphere");
         this.spherex=0;
         this.spherey=0;
-        this.done=false;
+        this.run=false;
+        this.p=p;
         this.x=35;
         this.y=35;
     }
@@ -109,37 +110,59 @@ export class sphere{
             this.frameTimer = 0;
             if (this.frameTimer < this.frameintervel) {
                 this.framex++;
+                if(this.p.u)
+                    this.framesx++;
+                
             }
-            else framex=0;
+            else{ 
+                framex=0;
+                if(this.p.u){
+                    this.framesx=0;
+                }
+            }
         }
         else{
             this.frameTimer += deltatime;
         }
-        if(this.framex>4){
-            this.framex=0;
-            this.done=true;
-            this.game.player1.u=false;
+        if(this.framesx>4){
+            this.framesx=0;
+            this.p.u=false;
+            this.run=false;
         }
-        if(this.done){
-            this.spherex=this.game.player1.x+30;
-            this.spherey=this.game.player1.y;
+        if(!this.run){
+            this.spherex=this.p.x+30;
+            this.spherey=this.p.y;
+            if(this.p.flip){
+                this.speed=-5;
+            }
+            else{
+                this.speed=5;
+            }
         }
-        if(this.game.player1.u){
-            this.game.player1.spherex=this.spherex;
-            this.game.player1.spherey=this.spherey;
+        if(this.p.u){
+            this.p.spherex=this.spherex;
+            this.p.spherey=this.spherey;
         }
         else{
-            this.game.player1.spherex=0;
-            this.game.player1.spherey=0;
+            this.p.spherex=0;
+            this.p.spherey=0;
         }
     }
     draw(ctx){
-        if(this.game.player1.u){
-            if(this.framex<4){
-                ctx.drawImage(this.sphere,(this.framex)*this.x,0,35,35,this.spherex,this.spherey,35,35);
-                this.done=false;
-                this.spherex+=5;
+        if(this.p.u && this.speed==-5){
+            if(this.framesx<4){
+                ctx.drawImage(this.sphere,(this.framesx)*this.x,0,35,35,this.spherex,this.spherey,35,35);
+                this.spherex+=this.speed;
+                this.run=true;
             }
         }
+        else if(this.p.u){
+            if(this.framesx<4){
+                ctx.drawImage(this.sphereflip,(this.framesx)*this.x,0,35,35,this.spherex,this.spherey,35,35);
+                this.spherex+=this.speed;
+                this.run=true;
+            }
+        }
+
     }
 }

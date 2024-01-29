@@ -27,10 +27,10 @@ export class STANDING extends State{
 
     }
     enter(){
-        if(this.input.keys.includes("a")){
+        if(this.input.keys.includes(this.player1.left)){
             this.player1.flip=true;
         }
-        else if(this.input.keys.includes("d")){
+        else if(this.input.keys.includes(this.player1.right)){
             this.player1.flip=false;
         }
         this.player1.frameY=0.5;
@@ -41,13 +41,13 @@ export class STANDING extends State{
     }
     InputHandler(input){
         if(this.player1.vulnarable)this.player1.setstate(states.VULNARABLE);
-        if(input.includes("a") || input.includes("d")){
+        if(input.includes(this.player1.left) || input.includes(this.player1.right)){
             this.player1.setstate(states.RUNNING);
         }
-        if(input.includes("j"))this.player1.setstate(states.PUNCH);
-        if(input.includes("k"))this.player1.setstate(states.JUMPING);
-        if(input.includes("l"))this.player1.setstate(states.SPRINTING);
-        if(input.includes("s")){
+        if(input.includes(this.player1.punch))this.player1.setstate(states.PUNCH);
+        if(input.includes(this.player1.jumper))this.player1.setstate(states.JUMPING);
+        if(input.includes(this.player1.sprinter))this.player1.setstate(states.SPRINTING);
+        if(input.includes(this.player1.crouch)){
             this.player1.setstate(states.BLOCK);
         }
     }
@@ -60,10 +60,10 @@ export class RUNNING extends State{
 
     }
     enter(){
-        if(this.input.keys.includes("a")){
+        if(this.input.keys.includes(this.player1.left)){
             this.player1.flip=true;
         }
-        else if(this.input.keys.includes("d")){
+        else if(this.input.keys.includes(this.player1.right)){
             this.player1.flip=false;
         }
         this.player1.height=65;
@@ -72,13 +72,13 @@ export class RUNNING extends State{
         this.player1.maxFrame=7;
     }
     InputHandler(input){
-        if(input.includes("d")||input.includes("a")){
+        if(input.includes(this.player1.right)||input.includes(this.player1.left)){
             this.player1.setstate(states.RUNNING);
         }
-        if(input.includes("j"))this.player1.setstate(states.PUNCH);
-        if(input.includes("k"))this.player1.setstate(states.JUMPING);
-        if(input.includes("l"))this.player1.setstate(states.SPRINTING);
-        else if(!input.includes("a") && !input.includes("d")){
+        if(input.includes(this.player1.punch))this.player1.setstate(states.PUNCH);
+        if(input.includes(this.player1.jumper))this.player1.setstate(states.JUMPING);
+        if(input.includes(this.player1.sprinter))this.player1.setstate(states.SPRINTING);
+        else if(!input.includes(this.player1.left) && !input.includes(this.player1.right)){
             this.player1.setstate(states.STANDING);
         }
         if(this.player1.vulnarable){
@@ -104,11 +104,11 @@ export class JUMPING extends State{
     }
     InputHandler(input){
         if(this.player1.vulnarable)this.player1.setstate(states.VULNARABLE);
-        if(input.includes("j"))this.player1.setstate(states.PUNCH);
+        if(input.includes(this.player1.punch))this.player1.setstate(states.PUNCH);
         if(this.player1.jump > this.player1.weight){
             this.player1.setstate(states.FALLING);
         }
-        if(input.includes("k"))this.player1.setstate(states.EXTRAJUMPING);
+        if(input.includes(this.player1.jumper))this.player1.setstate(states.EXTRAJUMPING);
     }
 }
 export class FALLING extends State{
@@ -126,14 +126,14 @@ export class FALLING extends State{
     }
     InputHandler(input){
         if(this.player1.vulnarable)this.player1.setstate(states.VULNARABLE);
-        if(input.includes("j"))this.player1.setstate(states.PUNCH);
+        if(input.includes(this.player1.punch))this.player1.setstate(states.PUNCH);
         if(this.player1.onground()){
             this.player1.frameX=0;
             this.player1.setstate(states.STANDING);
             this.player1.airStep=true;
             this.sound.play();
         }
-        if(input.includes("k"))this.player1.setstate(states.EXTRAJUMPING);
+        if(input.includes(this.player1.jumper))this.player1.setstate(states.EXTRAJUMPING);
     }
 }
 export class SPRINTING extends State{
@@ -152,8 +152,8 @@ export class SPRINTING extends State{
     }
     InputHandler(input){
         if(this.player1.vulnarable)this.player1.setstate(states.VULNARABLE);
-        if(input.includes("j"))this.player1.setstate(states.PUNCH);
-        if(input.includes("k"))this.player1.setstate(states.JUMPING);
+        if(input.includes(this.player1.punch))this.player1.setstate(states.PUNCH);
+        if(input.includes(this.player1.jumper))this.player1.setstate(states.JUMPING);
         else if(!this.player1.condition){
             this.player1.setstate(states.STANDING);
         }
@@ -172,9 +172,9 @@ export class BLOCK extends State{
         this.player1.width=40; 
     }
     InputHandler(input){
-        if(input.includes("j"))this.player1.setstate(states.PUNCH);
-        else if(input.includes("k"))this.player1.setstate(states.JUMPING);
-        else if(!input.includes("s")){
+        if(input.includes(this.player1.punch))this.player1.setstate(states.PUNCH);
+        else if(input.includes(this.player1.jumper))this.player1.setstate(states.JUMPING);
+        else if(!input.includes(this.player1.crouch)){
             this.player1.setstate(states.STANDING);
         }
     }
@@ -193,12 +193,12 @@ export class PUNCH extends State{
         this.player1.maxFrame=7;
     }
     InputHandler(input){
-        if(input.includes("k")){
+        if(input.includes(this.player1.jumper)){
             this.player1.setstate(states.JUMPING);
-            input.splice(input.indexOf("k"),1);    
+            input.splice(input.indexOf(this.player1.jumper),1);    
         }
-        if(input.includes("L"))this.player1.setstate(states.SPRINTING);
-        else if(!input.includes("j") ){
+        if(input.includes(this.player1.sprinter))this.player1.setstate(states.SPRINTING);
+        else if(!input.includes(this.player1.punch) ){
             this.player1.setstate(states.STANDING);
         }
     }
@@ -222,7 +222,7 @@ export class EXTRAJUMPING extends State{
         this.sound.play();
     }
     InputHandler(input){
-        if(input.includes("j"))this.player1.setstate(states.PUNCH);
+        if(input.includes(this.player1.punch))this.player1.setstate(states.PUNCH);
         if(this.player1.onground()){
             this.player1.setstate(states.STANDING);
         }

@@ -1,12 +1,19 @@
 import { STANDING,RUNNING,JUMPING,FALLING,SPRINTING,BLOCK,PUNCH,EXTRAJUMPING,VULNARABLE } from "./playerstates1.js";
 
 export class Player1{
-    constructor(game){
+    constructor(game,crouch,left,right,jumper,punch,sphere,sprint,x,y,flip,hp){
 
         this.invulnarable=false;
         this.invulnarablecount=0;
-
-
+        //controls
+        this.crouch=crouch;
+        this.left=left;
+        this.right=right;
+        this.jumper=jumper;
+        this.punch=punch;
+        this.sphere=sphere;
+        this.sprinter=sprint;
+        this.hp=hp;
         //vulnarable
         this.vulnarable=false;
         this.timegap=50;
@@ -16,9 +23,9 @@ export class Player1{
         
 
         this.hitlast=0
-        this.flip=false;
+        this.flip=flip;
         this.game = game;
-        this.x = 0;
+        this.x = x;
         this.health=0;
         this.width = 40;
         this.frames = 0;
@@ -44,7 +51,7 @@ export class Player1{
         this.jump=0;
         this.frameY=0;
         this.maxFrame=5;
-        this.y = this.game.height - this.height;
+        this.y = y;
 
         //images
         this.image1 = document.getElementById("player1");
@@ -68,19 +75,19 @@ export class Player1{
             if(this.invulnarable){
                 this.invulnarablecount++;
             }
-            if(input.includes("s")){
-                input=["s"];
+            if(input.includes(this.crouch)){
+                input=[this.crouch];
             }
-            if(input.includes("j")){
+            if(input.includes(this.punch)){
                 if(!this.flip){
                 this.x+=this.speed*0.016;
                 }
                 else{
                     this.x-=this.speed*0.016;
                 }
-                input=["j"];
+                input=[this.punch];
             }
-            if(input.includes("l")){
+            if(input.includes(this.sprinter)){
                 this.condition=true;
                 this.sprx=this.x;
                 this.spry=this.y;
@@ -99,19 +106,19 @@ export class Player1{
                 this.x1=0;
                 this.condition=false;
             }
-            if(input.includes("a")){
+            if(input.includes(this.left)){
                 this.x -= this.speed;
             }
-            if(input.includes("u")){
+            if(input.includes(this.sphere)){
                 this.u=true;
             }
-            else if(input.includes("d")){
+            else if(input.includes(this.right)){
                 this.x += this.speed;
             }
             if(this.x<0)this.x=0;
             if(this.x>canvas.width-this.width)
                 this.x=canvas.width-this.width;
-            // if(input.includes("k") && this.y===this.game.height-this.height){
+            // if(input.includes(this.jump) && this.y===this.game.height-this.height){
             //     this.jump=-18;
             // }
             
@@ -124,8 +131,8 @@ export class Player1{
                 this.y=this.game.height-this.height;
             }
             
-            if(input.includes("k")){
-                input.splice(input.indexOf("k"),1);
+            if(input.includes(this.jumper)){
+                input.splice(input.indexOf(this.jumper),1);
             }
         }else{
             //vulnerable timegap
@@ -173,7 +180,6 @@ export class Player1{
             this.frameTimer+=deltatime;
         }
 
-        //sprint animation
     }
     draw(ctx){
         if(this.flip){
@@ -184,8 +190,8 @@ export class Player1{
 
     }
     hpbar(ctx){
-        ctx.drawImage(this.hpbarfill1,0,0,47,2,70,18,this.health/17.96,6);
-        ctx.drawImage(this.hpimg,0,0,600,55,0,0,1050,100);
+        ctx.drawImage(this.hpbarfill1,0,0,47,2,70+this.hp,18,this.health/17.96,6);
+        ctx.drawImage(this.hpimg,0,0,600,55,this.hp,0,1050,100);
         // ctx.drawImage(this.hpbarfill,0,0,600,55,0,0,1050,100);
         // ctx.fillRect(0,0,this.health/3.76,10);
     }
