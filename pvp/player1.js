@@ -1,7 +1,7 @@
 import { STANDING,RUNNING,JUMPING,FALLING,SPRINTING,BLOCK,PUNCH,EXTRAJUMPING,VULNARABLE } from "./playerstates1.js";
 
 export class Player1{
-    constructor(game,crouch,left,right,jumper,punch,sphere,sprint,x,y,flip,hp){
+    constructor(game,crouch,left,right,jumper,punch,sphere,sprint,x,y,flip,hp,tag){
 
         this.invulnarable=false;
         this.invulnarablecount=0;
@@ -58,7 +58,6 @@ export class Player1{
         this. image2 = document.getElementById("player1flip");
         this.hpimg=document.getElementById("hpbar");
         this.hpbarfill1=document.getElementById("hpbarfill1");
-        
 
         this.states=[
                         new STANDING(this),new RUNNING(this),new JUMPING(this),new FALLING(this),
@@ -68,6 +67,8 @@ export class Player1{
 
         this.currentState=this.states[0];
         this.currentState.enter();
+
+        this.gametag=document.getElementById(tag);
     }
     update(input,deltatime){
         this.currentState.InputHandler(input);
@@ -183,8 +184,10 @@ export class Player1{
     }
     draw(ctx){
         if(this.flip){
+            ctx.drawImage(this.gametag,0,0,600,300,this.x+15,this.y-20,30,30);
             ctx.drawImage(this.image2,this.frameX * this.width,this.frameY * this.height,this.width,this.height,this.x,this.y,this.width,this.height);
         }else{
+            ctx.drawImage(this.gametag,0,0,600,300,this.x+15,this.y-20,30,30);
             ctx.drawImage(this.image1,this.frameX * this.width,this.frameY * this.height,this.width,this.height,this.x,this.y,this.width,this.height);
         }
 

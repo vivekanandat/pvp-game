@@ -13,8 +13,8 @@ window.addEventListener("load", function(){
         constructor(widht,height){
             this.widht = widht;
             this.height = height;
-            this.player2 = new Player1(this,"s","a","d","k","j","u","l",0,535,false,0);
-            this.player1 = new Player1(this,"ArrowDown","ArrowLeft","ArrowRight","2","1","4","3",756,535,true,636);
+            this.player2 = new Player1(this,"s","a","d","k","j","u","l",0,535,false,0,"p2");
+            this.player1 = new Player1(this,"ArrowDown","ArrowLeft","ArrowRight","2","1","4","3",756,535,true,636,"p1");
             this.Fight = new Fight(this.player1,this.player2);
             this.input=new InputHandler();
             this.sprint1=new sprint(this,this.player1);
